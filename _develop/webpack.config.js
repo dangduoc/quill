@@ -98,6 +98,7 @@ const tsRules = {
 
 const baseConfig = {
   mode: 'development',
+  devtool:'source-map',
   context: path.resolve(__dirname, '..'),
   entry: {
     'quill.js': ['./quill.js'],

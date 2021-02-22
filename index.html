@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- <link rel="stylesheet" href="/node_modules/katex/dist/katex.min.css">
+    <script src="/node_modules/katex/dist/katex.min.js"></script>
+    <script src="/node_modules/katex/dist/contrib/mhchem.js"></script> -->
+
+    <!-- <script src="/node_modules/jquery/dist/jquery.min.js"></script> -->
+
+    <link rel="stylesheet" href="/dist/quill.bubble.css">
+    <script src="/dist/quill.js"></script>
+
+    <!-- <link rel="stylesheet" href="/assets/mathquill/build/mathquill.css">
+
+    <script src="/assets/mathquill/build/mathquill.js"></script>
+
+    <script src="/mathquill4quill.js"></script>
+
+    <script src="/index.js"></script>
+    <link rel="stylesheet" href="/assets/scss/index.css">  -->
+</head>
+
+<body>
+    <!-- Create the editor container -->
+    <br />
+    <br />
+    <div id="editor">
+        <p>Hello World!</p>
+        <p>Some initial <strong>bold</strong> text</p>
+        <p><br></p>
+    </div>
+    </br>
+    <div id="demo"></div>
+
+
+
+
+
+    <script>
+        var editor = new Quill('#editor', {
+            modules: {
+                table: true,
+                toolbar: [
+                    ["bold", "italic", "underline", "formula"]
+                ]
+            },
+            placeholder:
+                "Type text here, or click on the formula button to enter math.",
+            theme: "bubble",
+        });
+    </script>
+</body>
+
+</html>
