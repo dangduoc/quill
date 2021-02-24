@@ -42,6 +42,7 @@ import Tooltip from './ui/tooltip';
 
 import BubbleTheme from './themes/bubble';
 import SnowTheme from './themes/snow';
+import Chemistry from './formats/chemistry';
 
 Quill.register(
   {
@@ -89,6 +90,7 @@ Quill.register(
     'formats/underline': Underline,
 
     'formats/formula': Formula,
+    'formats/chemistry':Chemistry,
     'formats/image': Image,
     'formats/video': Video,
 

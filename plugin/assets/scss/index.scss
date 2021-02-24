@@ -1,0 +1,202 @@
+.mathquill4quill-history-button {
+    overflow: hidden;
+    margin: 5px;
+    width: 270px;
+    height: 65px;
+    min-height: 60px;
+    background-color: #fff;
+    border-color: #000;
+    border-radius: 7px;
+    border-width: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s linear;
+    opacity: 1;
+}
+
+.mathquill4quill-history-button:hover {
+    background-color: rgb(239, 240, 241);
+    opacity: 0.7;
+}
+
+.mathquill4quill-history-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 150px;
+    overflow: auto;
+}
+
+.ql-tooltip.ql-editing .ql-tooltip-editor a.ql-action.formula-save::before {
+    content: none !important;
+}
+
+.ql-tooltip.ql-editing .ql-tooltip-editor a.ql-action.formula-save::after {
+    border-right: 0px;
+    content: "Save";
+    padding-right: 0px;
+    margin-left: 16px;
+    color: #000;
+    visibility: visible;
+    position: relative;
+    transform: none;
+    border: 0;
+}
+.ql-tooltip.ql-editing .ql-tooltip-editor a.ql-action.formula-save {
+    line-height: 26px;
+    white-space: normal;
+    right: -35px;
+    position: absolute;
+    z-index: 1;
+}
+.ql-tooltip .ql-chemistry {
+    // &::after{
+    //     content: 'C';
+    //     color: #fff;
+    // }
+}
+
+.mathquill4quill-mathquill-wrapper {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    z-index: 999;
+    width: 380px;
+    border: 1px solid #d9d9d9;
+    .preview-label {
+        margin: 5px;
+        color: #bbb;
+    }
+    .chemistry-preview {
+        padding: 5px;
+        border: 1px dashed #d9d9d9;
+        margin: 5px;
+        margin-bottom: 15px;
+    }
+    .quill-chemistry-input {
+        width: 100%;
+        border: 0;
+        padding: 15px 5px;
+        width: calc(100% - 10px);
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        box-sizing: border-box;
+        font-size: 16px;
+        margin-bottom: 8px;
+        &:focus {
+            border-color: #fca000;
+            outline: 0;
+            box-shadow: 0 0 4px 1px #f0c16f;
+        }
+    }
+    .mathquill4quill-mathquill-wrapper-header {
+        position: relative;
+        border-bottom: 1px solid #d9d9d9;
+        text-align: left;
+        padding: 5px 8px;
+        background: #ffa000;
+        color: #fff;
+        .close {
+            cursor: pointer;
+        }
+        .close::after {
+            content: "X";
+            display: block;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+    }
+    .mathquill4quill-mathquill-input {
+        min-height: 26px;
+        margin: 0;
+        /* background: transparent; */
+        border: none;
+        /* color: #fff; */
+        font-size: 14px;
+        height: 100%;
+        outline: none;
+        padding: 0 10px;
+        /* position: absolute; */
+        width: 100%;
+        vertical-align: middle;
+        display: flex;
+        align-items: center;
+        padding: 15px 8px;
+        width: 100%;
+
+        &.mq-focused {
+            border-color: #fca000;
+            outline: 0;
+            box-shadow: 0 0 4px 1px #f0c16f;
+            border-radius: 0 !important;
+        }
+    }
+
+    .mathquill4quill-operator-container {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        border-bottom: 1px solid #d9d9d9;
+        background-color: #f5e0bc;
+        .mathquill4quill-operator-button {
+            width: auto;
+            border-radius: 3px;
+            border-width: 2px;
+            font-size: 12px;
+            border: 0;
+            color: #000;
+            -webkit-transition: color 0.5s;
+            transition: color 0.5s;
+            cursor: pointer;
+            background: #f5e0bc;
+            padding: 2px;
+            margin: 3px;
+            border: 1px solid transparent;
+            &:hover {
+                border: 1px solid #fff;
+                box-shadow: 0 0 3px 0px rgba(255, 255, 255, 0.4);
+            }
+        }
+        .quill-divider {
+            width: 100%;
+            display: block;
+            border-top: 1px solid #f5f5f5;
+        }
+        .quill-vertical-divider {
+            display: inline-block;
+            height: 20px;
+            width: 1px;
+            background-color: #f5f5f5;
+            vertical-align: middle;
+        }
+    }
+    .mathquill4quill-mathquill-wrapper-footer {
+        border-top: 1px solid #d9d9d9;
+        padding: 5px;
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+            &.save {
+                background-color: #fca000;
+                color: #fff;
+            }
+            &.close {
+            }
+        }
+    }
+}
+
+.mathquill4quill-latex-input {
+    visibility: hidden !important;
+    padding: 0 !important;
+    border: 0 !important;
+    width: 0 !important;
+}

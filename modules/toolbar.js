@@ -7,6 +7,7 @@ import Module from '../core/module';
 const debug = logger('quill:toolbar');
 
 class Toolbar extends Module {
+
   constructor(quill, options) {
     super(quill, options);
     if (Array.isArray(this.options.container)) {
@@ -42,6 +43,7 @@ class Toolbar extends Module {
       const [range] = this.quill.selection.getRange(); // quill.getSelection triggers update
       this.update(range);
     });
+
   }
 
   addHandler(format, handler) {
@@ -49,6 +51,7 @@ class Toolbar extends Module {
   }
 
   attach(input) {
+
     let format = Array.from(input.classList).find(className => {
       return className.indexOf('ql-') === 0;
     });
@@ -65,45 +68,55 @@ class Toolbar extends Module {
       return;
     }
     const eventName = input.tagName === 'SELECT' ? 'change' : 'click';
-    input.addEventListener(eventName, e => {
-      let value;
-      if (input.tagName === 'SELECT') {
-        if (input.selectedIndex < 0) return;
-        const selected = input.options[input.selectedIndex];
-        if (selected.hasAttribute('selected')) {
-          value = false;
+    if (input.classList.contains('ql-chemistry')) {
+      this.chemistryButtonClickHandler(input, this.quill);
+    }
+    else {
+      input.addEventListener(eventName, e => {
+
+        let value;
+        if (input.tagName === 'SELECT') {
+          if (input.selectedIndex < 0) return;
+          const selected = input.options[input.selectedIndex];
+          if (selected.hasAttribute('selected')) {
+            value = false;
+          } else {
+            value = selected.value || false;
+          }
         } else {
-          value = selected.value || false;
+          if (input.classList.contains('ql-active')) {
+            value = false;
+          } else {
+            value = input.value || !input.hasAttribute('value');
+          }
+          e.preventDefault();
         }
-      } else {
-        if (input.classList.contains('ql-active')) {
-          value = false;
+        this.quill.focus();
+        const [range] = this.quill.selection.getRange();
+        if (this.handlers[format] != null) {
+          this.handlers[format].call(this, value);
+        } else if (
+          this.quill.scroll.query(format).prototype instanceof EmbedBlot
+        ) {
+          if (input.classList.contains('ql-chemistry')) {
+            openFormulaPanel();
+          };
+          if (input.classList.contains('ql-formula')) return;
+          value = prompt(`Enter ${format}`); // eslint-disable-line no-alert
+          if (!value) return;
+          this.quill.updateContents(
+            new Delta()
+              .retain(range.index)
+              .delete(range.length)
+              .insert({ [format]: value }),
+            Quill.sources.USER,
+          );
         } else {
-          value = input.value || !input.hasAttribute('value');
+          this.quill.format(format, value, Quill.sources.USER);
         }
-        e.preventDefault();
-      }
-      this.quill.focus();
-      const [range] = this.quill.selection.getRange();
-      if (this.handlers[format] != null) {
-        this.handlers[format].call(this, value);
-      } else if (
-        this.quill.scroll.query(format).prototype instanceof EmbedBlot
-      ) {
-        value = prompt(`Enter ${format}`); // eslint-disable-line no-alert
-        if (!value) return;
-        this.quill.updateContents(
-          new Delta()
-            .retain(range.index)
-            .delete(range.length)
-            .insert({ [format]: value }),
-          Quill.sources.USER,
-        );
-      } else {
-        this.quill.format(format, value, Quill.sources.USER);
-      }
-      this.update(range);
-    });
+        this.update(range);
+      });
+    }
     this.controls.push([format, input]);
   }
 
@@ -145,6 +158,102 @@ class Toolbar extends Module {
         input.classList.toggle('ql-active', formats[format] != null);
       }
     });
+  }
+  chemistryButtonClickHandler(button, quill) {
+    var foruma_editor_wrap = null;
+    button.addEventListener('click', function () {
+      var wrap = document.getElementsByClassName('mathquill4quill-mathquill-wrapper');
+      if (wrap.length > 0) {
+        for (let index = 0; index < wrap.length; index++) {
+          const element = wrap[index];
+          element.remove();
+        }
+      }
+      openFormulaPanel();
+    });
+    function openFormulaPanel() {
+      //  const mqField = mqInput.render();
+      var inputField = document.createElement('input');
+      inputField.setAttribute('type', 'text');
+      inputField.setAttribute('class', 'quill-chemistry-input');
+      inputField.setAttribute('placeholder', "Al + HCl -> AlCl3 + H2­");
+      //preview
+      const previewLabel = document.createElement('div');
+      previewLabel.setAttribute('class','preview-label');
+      previewLabel.innerText="Xem thử: ";
+      const previewDiv = document.createElement('div');
+      previewDiv.setAttribute("class", "chemistry-preview");
+
+      inputField.addEventListener('input', function () {
+        let value = '\\ce{' + inputField.value + '}';
+        window.katex.render(value, previewDiv, {
+          throwOnError: false,
+          errorColor: '#f00',
+        });
+      });
+
+      foruma_editor_wrap = document.createElement("div");
+      foruma_editor_wrap.setAttribute("class", "mathquill4quill-mathquill-wrapper");
+      foruma_editor_wrap.appendChild(previewLabel);
+      foruma_editor_wrap.appendChild(previewDiv);
+      foruma_editor_wrap.appendChild(inputField);
+      window.katex.render("\\ce{Al + HCl -> AlCl3 + H2}", previewDiv, {
+        throwOnError: false,
+        errorColor: '#f00',
+      });
+      //header
+      var foruma_editor_wrap_header = document.createElement("div");
+      foruma_editor_wrap_header.setAttribute("class", "mathquill4quill-mathquill-wrapper-header");
+      foruma_editor_wrap_header.innerText = 'Phương trình hóa học';
+      var foruma_editor_wrap_header_close = document.createElement('a');
+      foruma_editor_wrap_header_close.setAttribute('class', 'close');
+      foruma_editor_wrap_header.appendChild(foruma_editor_wrap_header_close);
+      foruma_editor_wrap.appendChild(foruma_editor_wrap_header);
+      //
+      //footer
+      var foruma_editor_wrap_footer = document.createElement("div");
+      foruma_editor_wrap_footer.setAttribute("class", "mathquill4quill-mathquill-wrapper-footer");
+      //save button
+      var foruma_editor_wrap_footer_save = document.createElement('button');
+      foruma_editor_wrap_footer_save.innerText = "Thêm";
+      foruma_editor_wrap_footer_save.setAttribute('class', 'save');
+      foruma_editor_wrap_footer_save.addEventListener('click', function () {
+        quill.focus();
+        const [range] = quill.selection.getRange();
+        quill.updateContents(
+          new Delta()
+            .retain(range.index)
+            .delete(range.length)
+            .insert({ ['chemistry']: inputField.value }),
+          Quill.sources.USER,
+        );
+        closeFormulaPanel();
+      });
+      //cancel button
+      var foruma_editor_wrap_footer_close = document.createElement('button');
+      foruma_editor_wrap_footer_close.innerText = "Hủy";
+      foruma_editor_wrap_footer_close.setAttribute('class', 'close');
+      foruma_editor_wrap_header_close.addEventListener('click', function () {
+        closeFormulaPanel();
+      });
+      foruma_editor_wrap_footer_close.addEventListener('click', function () {
+
+        closeFormulaPanel();
+      });
+      //
+      foruma_editor_wrap_footer.appendChild(foruma_editor_wrap_footer_save);
+      foruma_editor_wrap_footer.appendChild(foruma_editor_wrap_footer_close);
+
+      //
+      // foruma_editor_wrap.insertBefore(commandButtons, foruma_editor_wrap.childNodes[0]);
+      foruma_editor_wrap.insertBefore(foruma_editor_wrap_header, foruma_editor_wrap.childNodes[0]);
+
+      foruma_editor_wrap.appendChild(foruma_editor_wrap_footer);
+      document.body.appendChild(foruma_editor_wrap);
+    }
+    function closeFormulaPanel() {
+      foruma_editor_wrap.remove();
+    }
   }
 }
 Toolbar.DEFAULTS = {};

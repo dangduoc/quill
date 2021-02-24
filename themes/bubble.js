@@ -51,6 +51,10 @@ class BubbleTooltip extends BaseTooltip {
 
   listen() {
     super.listen();
+    this.root.querySelector('a.ql-formula-save').addEventListener('click', event => {
+      this.save();
+      event.preventDefault();
+    });
     this.root.querySelector('.ql-close').addEventListener('click', () => {
       this.root.classList.remove('ql-editing');
     });
@@ -84,6 +88,7 @@ BubbleTooltip.TEMPLATE = [
   '<span class="ql-tooltip-arrow"></span>',
   '<div class="ql-tooltip-editor">',
   '<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">',
+  '<a class="ql-action ql-formula-save"></a>',
   '<a class="ql-close"></a>',
   '</div>',
 ].join('');

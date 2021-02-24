@@ -1,0 +1,87 @@
+{
+  "_from": "mathquill4quill",
+  "_id": "mathquill4quill@2.2.0",
+  "_inBundle": false,
+  "_integrity": "sha512-nIBVg5qwQ7LU9qUv6vcber7VbMP/LWLoVoFRpeDNQawQgcS/SaPD5IdRAbr2A9Um7H9/qGMX+1S0NsqfHWhmng==",
+  "_location": "/mathquill4quill",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "mathquill4quill",
+    "name": "mathquill4quill",
+    "escapedName": "mathquill4quill",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/mathquill4quill/-/mathquill4quill-2.2.0.tgz",
+  "_shasum": "b66e8dd134799c54d1cb4179af1d11f390704474",
+  "_spec": "mathquill4quill",
+  "_where": "C:\\Users\\Admin\\Desktop\\New folder (2)",
+  "bugs": {
+    "url": "https://github.com/c-w/mathquill4quill/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "[![Build Status](https://clewolff.visualstudio.com/mathquill4quill/_apis/build/status/c-w.mathquill4quill?branchName=master)](https://clewolff.visualstudio.com/mathquill4quill/_build/latest?definitionId=5&branchName=master) [![Version](https://img.shields.io/npm/v/mathquill4quill.svg)](https://www.npmjs.com/package/mathquill4quill) [![Code Style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/c-w/mathquill4quill/blob/master/LICENSE.txt)",
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "chromedriver": "^85.0.0",
+    "concurrently": "^4.1.1",
+    "csso-cli": "^3.0.0",
+    "eslint": "^5.16.0",
+    "markdownlint-cli": "^0.22.0",
+    "mkdirp": "^0.5.1",
+    "nightwatch": "^1.1.12",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "release-it": "^12.4.3",
+    "reload": "^3.0.1",
+    "rimraf": "^3.0.2",
+    "serve": "^11.0.2",
+    "stylelint": "^13.2.0",
+    "stylelint-config-standard": "^20.0.0",
+    "uglify-js": "^3.6.0"
+  },
+  "files": [
+    "build/mathquill4quill.min.css",
+    "build/mathquill4quill.min.js",
+    "mathquill4quill.css",
+    "mathquill4quill.js"
+  ],
+  "homepage": "https://github.com/c-w/mathquill4quill#readme",
+  "license": "Apache-2.0",
+  "main": "mathquill4quill.js",
+  "name": "mathquill4quill",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c-w/mathquill4quill.git"
+  },
+  "scripts": {
+    "build": "run-s build.babel build.uglify build.csso",
+    "build.babel": "babel mathquill4quill.js > build/mathquill4quill.js",
+    "build.csso": "csso --input mathquill4quill.css --output build/mathquill4quill.min.css",
+    "build.uglify": "uglifyjs --compress --mangle -- build/mathquill4quill.js > build/mathquill4quill.min.js",
+    "lint": "run-s lint.js lint.css lint.md lint.prettier",
+    "lint.css": "stylelint \"*.css\"",
+    "lint.js": "eslint --ext js .",
+    "lint.md": "markdownlint \"*.md\"",
+    "lint.prettier": "prettier --check \"**/*.js\"",
+    "postbuild": "rimraf build/mathquill4quill.js",
+    "prebuild": "mkdirp build",
+    "release": "release-it",
+    "start": "reload --port 8080 --browser --dir .",
+    "test": "concurrently --kill-others --success first \"serve -n -l 8000\" \"nightwatch -e chrome tests\""
+  },
+  "version": "2.2.0"
+}

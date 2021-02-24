@@ -11,6 +11,7 @@ import colorIcon from '../assets/icons/color.svg';
 import directionLeftToRightIcon from '../assets/icons/direction-ltr.svg';
 import directionRightToLeftIcon from '../assets/icons/direction-rtl.svg';
 import formulaIcon from '../assets/icons/formula.svg';
+import chemistryIcon from '../assets/icons/chemistry.svg';
 import headerIcon from '../assets/icons/header.svg';
 import header2Icon from '../assets/icons/header-2.svg';
 import italicIcon from '../assets/icons/italic.svg';
@@ -47,6 +48,7 @@ export default {
     rtl: directionRightToLeftIcon,
   },
   formula: formulaIcon,
+  chemistry: chemistryIcon,
   header: {
     '1': headerIcon,
     '2': header2Icon,
